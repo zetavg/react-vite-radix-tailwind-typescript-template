@@ -3,6 +3,7 @@
   "style": "new-york",
   "rsc": false,
   "tsx": true,
+  "storybook": true,
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/index.css",
