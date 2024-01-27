@@ -1,30 +1,43 @@
-# React + TypeScript + Vite
+# React app template with TS, Tailwind CSS, and Radix UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![](https://github.com/zetavg/react-vite-radix-tailwind-typescript-template/assets/3784687/947a2a60-d23b-4e06-8707-016130663107)](https://zetavg.github.io/react-vite-radix-tailwind-typescript-template/)
 
-Currently, two official plugins are available:
+This is a template project for a [Vite](https://vitejs.dev) [React](https://react.dev) app with [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), and [Radix UI](https://www.radix-ui.com/) ([shadcn-ui](https://ui.shadcn.com/)).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✅ [Tailwind CSS](https://tailwindcss.com/)
+✅ [Radix UI](https://www.radix-ui.com/) with [shadcn-ui](https://ui.shadcn.com/)
+✅ [TypeScript](https://www.typescriptlang.org/)
+✅ [ESLint](https://eslint.org/) with [Prettier](https://prettier.io/) and [simple-import-sort](https://github.com/lydell/eslint-plugin-simple-import-sort)
+✅ [Jest](https://jestjs.io/) for unit testing
+✅ Absolute imports with `@/*`
+✅ GitHub Actions for testing, building, and deploying to GitHub Pages
 
-## Expanding the ESLint configuration
+## Available Scripts
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+In the project directory, you can run:
 
-- Configure the top-level `parserOptions` property like this:
+### `npm start`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Runs the app in the development mode.\
+Open the shown URL in the terminal to view it in the browser.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deploying](https://vitejs.dev/guide/static-deploy) for more information.
+
+## Learn More
+
+You can learn more in the [Vite documentation](https://vitejs.dev/).
+
+See the documentation of [Tailwind CSS](https://tailwindcss.com/docs), [Radix UI](https://www.radix-ui.com/primitives/docs), and [shadcn/ui](https://ui.shadcn.com/docs/components) on how to use them.
+
+To learn React, check out the [React documentation](https://reactjs.org/).
