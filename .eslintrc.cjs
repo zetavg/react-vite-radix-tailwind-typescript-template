@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: true, node: true, es2020: true },
-  ignorePatterns: ['dist', '!.eslintrc.cjs', '!.prettierrc.cjs'],
+  ignorePatterns: ['dist', '!.eslintrc.cjs', '!.prettierrc.cjs', '!.storybook'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
