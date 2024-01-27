@@ -1,0 +1,70 @@
+name: CI
+on:
+  push:
+    branches:
+    - main
+    paths-ignore:
+      - '**/README.md'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+    - main
+    paths-ignore:
+      - '**/README.md'
+  release:
+    types: [published]
+  schedule:
+    # First Sunday of every month
+    # See: https://crontab.guru/#0_0_1-7_*_*/7
+    - cron: '0 0 1-7 * */7'  # https://stackoverflow.com/a/73826599
+    # # Every Monday
+    # - cron: 0 0 * * 1
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages on called workflows
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+      - name: Lint
+        run: npm run lint
+
+  typecheck:
+    name: "Typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+      - name: Typecheck
+        run: npm run typecheck
+
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+      - name: Test
+        run: FORCE_COLOR=true npm run test -- --verbose
+
+  deploy-gh-pages:
+    name: "Deploy to GitHub Pages"
+    needs:
+      - typecheck
+      - test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/deploy-gh-pages.yml
+    secrets: inherit
