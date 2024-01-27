@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2",
     "@radix-ui/react-icons": "^1",
+    "@radix-ui/react-slot": "^1",
     "class-variance-authority": "^0",
     "clsx": "^2",
     "react": "^18",
