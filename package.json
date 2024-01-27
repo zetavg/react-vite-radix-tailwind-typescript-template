@@ -9,6 +9,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext js,cjs,ts,tsx --report-unused-disable-directives",
     "typecheck": "tsc --noEmit",
+    "test": "jest",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "tailwindcss-animate": "^1"
   },
   "devDependencies": {
+    "@types/jest": "^29",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -37,9 +39,12 @@
     "eslint-plugin-react-hooks": "^4",
     "eslint-plugin-react-refresh": "^0",
     "eslint-plugin-simple-import-sort": "^10",
+    "jest": "^29",
     "postcss": "^8",
     "prettier": "^3",
     "tailwindcss": "^3",
+    "ts-jest": "^29",
+    "ts-node": "^10",
     "typescript": "^5",
     "vite": "^5"
   }
