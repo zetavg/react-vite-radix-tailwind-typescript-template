@@ -1,0 +1,15 @@
+name: Build
+inputs:
+  base_url:
+    type: string
+    description: 'Base URL for the site'
+    required: true
+    default: './'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Environment
+      uses: ./.github/actions/setup-environment
+    - name: Build
+      shell: bash
+      run: PUBLIC_URL=${{ inputs.base_url }} npm run build
