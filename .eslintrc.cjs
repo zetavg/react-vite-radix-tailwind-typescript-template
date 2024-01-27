@@ -5,16 +5,41 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
   ],
   plugins: ['react-refresh', 'simple-import-sort'],
   parser: '@typescript-eslint/parser',
+  settings: {
+    react: { version: 'detect' },
+  },
+  overrides: [
+    {
+      extends: [
+        'plugin:@typescript-eslint/recommended-type-checked',
+        'plugin:@typescript-eslint/stylistic-type-checked',
+      ],
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: ['./tsconfig.json', './tsconfig.node.json'],
+        tsconfigRootDir: __dirname,
+      },
+      files: ['./**/*.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'warn',
+        '@typescript-eslint/consistent-type-definitions': 'warn',
+      },
+    },
+  ],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
+    'react/prop-types': 'off', // This rule failed to detect TypeScript defined types sometimes
     'no-spaced-func': 'off',
     '@typescript-eslint/no-unused-vars': [
       'warn',
@@ -24,6 +49,7 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
     'prettier/prettier': 'warn',
     'simple-import-sort/imports': [
       'warn',
