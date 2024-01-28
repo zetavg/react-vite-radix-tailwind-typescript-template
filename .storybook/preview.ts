@@ -9,7 +9,10 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
-      exclude: /^on.+/g, // e.g. onClick, etc.
+      exclude: /^(on.+|asChild)/g, // e.g. onClick, asChild, etc.
+    },
+    docs: {
+      toc: true,
     },
   },
 };

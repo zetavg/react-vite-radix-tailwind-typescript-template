@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import {
   Cloud,
   CreditCard,
@@ -19,11 +20,14 @@ import {
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuSub,
@@ -37,23 +41,27 @@ import {
  * triggered by a button.
  */
 const meta: Meta<typeof DropdownMenu> = {
-  title: 'ui/DropdownMenu',
+  title: 'UI/DropdownMenu',
   component: DropdownMenu,
   tags: ['autodocs'],
+  args: {
+    onOpenChange: fn(),
+  },
   argTypes: {},
   parameters: {
     layout: 'centered',
+    controls: { disable: true },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof DropdownMenu>;
 
-export const Base: Story = {
+export const Default: Story = {
   render: (args) => (
     <DropdownMenu {...args}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">Click to Open</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -140,9 +148,93 @@ export const Base: Story = {
   args: {},
 };
 
+export const Opened: Story = {
+  render: Default.render,
+  play: async ({ args, canvasElement, step }) => {
+    const containerElement = canvasElement.parentElement ?? canvasElement;
+    const canvas = within(containerElement);
+
+    await step('Initial state', async () => {
+      await expect(containerElement.innerText).not.toContain('My Account');
+      await expect(containerElement.innerText).not.toContain('Profile');
+      await expect(containerElement.innerText).not.toContain('Email');
+    });
+
+    await step('Click on trigger', async () => {
+      await userEvent.click(canvas.getByRole('button'));
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      await waitFor(() => expect(args.onOpenChange).toHaveBeenCalled());
+      await waitFor(() =>
+        expect(canvas.getByText('My Account')).toBeInTheDocument(),
+      );
+      await waitFor(() =>
+        expect(canvas.getByText('Profile')).toBeInTheDocument(),
+      );
+      await expect(containerElement.innerText).toContain('My Account');
+      await expect(containerElement.innerText).toContain('Profile');
+      await expect(containerElement.innerText).not.toContain('Email');
+    });
+
+    await step('Hover on submenu', async () => {
+      await userEvent.hover(canvas.getByText('Invite users'));
+      await waitFor(() =>
+        expect(canvas.getByText('Email')).toBeInTheDocument(),
+      );
+      await expect(containerElement.innerText).toContain('My Account');
+      await expect(containerElement.innerText).toContain('Profile');
+      await expect(containerElement.innerText).toContain('Email');
+    });
+  },
+};
+
+/**
+ * Scrolling is not disabled when the menu is open.
+ */
 export const DisableModal: Story = {
-  render: Base.render,
+  render: Default.render,
   args: {
     modal: false,
   },
+};
+
+export const Checkboxes: Story = {
+  render: () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Click to Open</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem checked onCheckedChange={undefined}>
+          Status Bar
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem disabled>
+          Activity Bar
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem checked onCheckedChange={undefined}>
+          Panel
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
+};
+
+export const RadioGroup: Story = {
+  render: () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Click to Open</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup value={'bottom'} onValueChange={undefined}>
+          <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
 };
