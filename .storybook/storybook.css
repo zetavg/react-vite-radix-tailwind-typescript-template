@@ -22,16 +22,21 @@
   background: #12161a;
 }
 
-/* The anchor icon on headings tends lose their styles after switching themes, so we re-apply them here */
 .sbdocs h1 > a[aria-hidden="true"],
 .sbdocs h2 > a[aria-hidden="true"],
 .sbdocs h3 > a[aria-hidden="true"],
 .sbdocs h4 > a[aria-hidden="true"],
 .sbdocs h5 > a[aria-hidden="true"],
 .sbdocs h6 > a[aria-hidden="true"] {
-  float: left;
-  line-height: inherit;
-  padding-right: 10px;
-  margin-left: -24px;
+  position: absolute;
   color: inherit;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
 }

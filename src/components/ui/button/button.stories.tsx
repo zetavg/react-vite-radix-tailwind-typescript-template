@@ -31,6 +31,17 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
+/**
+ * ## Links
+ *
+ * You can set the `asChild` prop and nest a link component to create a link that looks like a button.
+ *
+ * ```jsx
+ * <Button asChild>
+ *   <a href="/">Go Home</a>
+ * </Button>
+ * ```
+ */
 export const Default: Story = {};
 
 export const Sizes: Story = {
