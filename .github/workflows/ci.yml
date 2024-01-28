@@ -67,14 +67,43 @@ jobs:
       base_url: './'
     secrets: inherit
 
+  build-storybook:
+    name: "Build Storybook"
+    uses: ./.github/workflows/build-storybook.yml
+    secrets: inherit
+
+  test-storybook:
+    name: "Test Storybook"
+    runs-on: ubuntu-latest
+    needs: build-storybook
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: storybook
+          path: storybook-static
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+      - name: Install Chromium
+        run: npx playwright install chromium
+      - name: Test Storybook
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on http://127.0.0.1:6006 && npm run test-storybook"
+
   deploy-gh-pages:
     name: Deploy to GitHub Pages
     needs:
       - typecheck
       - test
       - build
+      - build-storybook
+      - test-storybook
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     uses: ./.github/workflows/deploy-gh-pages.yml
     with:
       get_built_app_from_artifact: true
+      get_built_storybook_from_artifact: true
     secrets: inherit

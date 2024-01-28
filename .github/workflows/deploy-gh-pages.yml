@@ -8,6 +8,9 @@ on:
       get_built_app_from_artifact:
         type: boolean
         default: false
+      get_built_storybook_from_artifact:
+        type: boolean
+        default: false
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -43,6 +46,25 @@ jobs:
         with:
           name: build
           path: dist
+      - name: Build Storybook
+        if: ${{ !inputs.get_built_storybook_from_artifact }}
+        uses: ./.github/actions/build-storybook
+      - name: Download built Storybook from Artifact
+        if: ${{ inputs.get_built_storybook_from_artifact }}
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook
+          path: storybook-static
+      - name: Download built Storybook docs from Artifact
+        if: ${{ inputs.get_built_storybook_from_artifact }}
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-docs
+          path: storybook-docs-static
+      - name: Prepare storybook
+        run: |
+          mv storybook-static dist/storybook
+          mv storybook-docs-static dist/storybook-docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

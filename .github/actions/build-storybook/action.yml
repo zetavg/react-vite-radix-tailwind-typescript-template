@@ -1,0 +1,12 @@
+name: 'Build Storybook'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Environment
+      uses: ./.github/actions/setup-environment
+    - name: Build Storybook
+      shell: bash
+      run: npm run build-storybook
+    - name: Build Storybook Docs
+      shell: bash
+      run: npm run build-storybook-docs
