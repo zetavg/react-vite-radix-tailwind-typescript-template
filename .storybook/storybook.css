@@ -1,0 +1,37 @@
+/* Use the theme's background color for the preview */
+.sbdocs-preview::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  background-color: hsl(var(--background));
+  opacity: 1;
+}
+
+/* Container of the "Show code" button */
+.sbdocs-preview > .docs-story > div:last-child {
+  background: transparent !important;
+}
+
+/* The "Show code" code block */
+.docs-story + div {
+  background: #12161a;
+}
+
+/* The anchor icon on headings tends lose their styles after switching themes, so we re-apply them here */
+.sbdocs h1 > a[aria-hidden="true"],
+.sbdocs h2 > a[aria-hidden="true"],
+.sbdocs h3 > a[aria-hidden="true"],
+.sbdocs h4 > a[aria-hidden="true"],
+.sbdocs h5 > a[aria-hidden="true"],
+.sbdocs h6 > a[aria-hidden="true"] {
+  float: left;
+  line-height: inherit;
+  padding-right: 10px;
+  margin-left: -24px;
+  color: inherit;
+}
