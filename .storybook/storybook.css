@@ -40,3 +40,11 @@
   align-items: center;
   padding: 0;
 }
+
+/* Better UX on mobile */
+.sbdocs div:has(> .docblock-argstable) {
+  overflow-y: auto;
+}
+.sbdocs div:has(> .docblock-argstable) .docblock-argstable {
+  margin-top: 0;
+}
