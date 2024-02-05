@@ -23,7 +23,7 @@
     "class-variance-authority": "^0",
     "clsx": "^2",
     "jotai": "^2.6.4",
-    "lucide-react": "^0.316.0",
+    "lucide-react": "^0.323.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2",
